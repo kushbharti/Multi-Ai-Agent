@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api/auth", proxy(process.env.AUTH_SERVICE));
-app.get("/api/me", ProcessingInstruction, getCurrentUser);
+app.get("/api/me", protect, getCurrentUser);
 
 app.get("/", (req, res) => {
   res.json({ message: "Gateway is running" });

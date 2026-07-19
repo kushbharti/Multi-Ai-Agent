@@ -2,8 +2,11 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../../utils/firebase";
 import api from "../../utils/axios";
 import { FcGoogle } from "react-icons/fc";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+  const { userData } = useSelector((state) => state.user);
+  console.log(userData);
   const handleLogin = async (token) => {
     try {
       const { data } = await api.post("/api/auth/login", { token });
