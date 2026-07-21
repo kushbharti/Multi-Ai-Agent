@@ -9,11 +9,11 @@ const conversationSlice = createSlice({
     setConversations: (state, action) => {
       state.conversations = action.payload;
     },
-    addconversation: (state, action) => {
+    addConversation: (state, action) => {
       state.conversations.unshift(action.payload);
     },
   },
 });
 
-export const { setConversations, addconversation } = conversationSlice.actions;
+export const { setConversations, addConversation } = conversationSlice.actions;
 export default conversationSlice.reducer;
