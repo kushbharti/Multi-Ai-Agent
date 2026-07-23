@@ -1,4 +1,6 @@
 import {
+  Coins,
+  LogOut,
   MessageSquare,
   PanelLeftIcon,
   PenSquare,
@@ -6,14 +8,17 @@ import {
   User,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getConversations } from "./../features/getConversations";
+import { getConversations } from "../features/getConversations";
+import logOut from '../features/logOut'
+import{setUserData} from '../redux/userSlice'
 import { useDispatch, useSelector } from "react-redux";
 import {
   setConversations,
   addConversation,
   setSelectConversation,
 } from "../redux/conversationSlice";
-import { createConversation } from "../features/createConversation.js";
+
+import { createConversation } from "../features/createConversation";
 
 function SideBar() {
   const [collapsed, setCollapsed] = useState(false);
@@ -119,9 +124,27 @@ function SideBar() {
                   </div>
                 )}
               </div>
+
+              <div className="flex-1 min-w-0">
+                <p className="text-[13.3px] font-semibold text-slate-100 truncate">
+                  {userData.name || "User"}
+                </p>
+                <p className="text-[11px] text-slate-600 mt-px">
+                  {"Free Plan"}
+                </p>
+              </div>
+
+              <div className="flex gap-1">
+                <button className="flex item-center justify-center w-7 h-7 rounded-[7px] border-none bg-transparent text-yellow-600 cursor-pointer hover:bg-white/8 hover:text-slate-400 transition-all duration-150">
+                  <Coins size={16} />
+                </button>
+                <button className="flex item-center justify-center w-7 h-7 rounded-[7px] border-none bg-transparent text-yellow-600 cursor-pointer hover:bg-white/8 hover:text-slate-400 transition-all duration-150" onClick={()=>{logOut(),dispatch(setUserData(null))}}>
+                  <LogOut size={16} />
+                </button>
+              </div>
             </div>
           ) : (
-            <button>Login</button>
+            <button className="text-slate-400">Login</button>
           )}
         </div>
       </div>
