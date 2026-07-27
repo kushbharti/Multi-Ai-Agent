@@ -3,14 +3,15 @@ import {
   LogOut,
   MessageSquare,
   PanelLeftIcon,
+  PanelRight,
   PenSquare,
   Plus,
   User,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getConversations } from "../features/getConversations";
-import logOut from '../features/logOut'
-import{setUserData} from '../redux/userSlice'
+import logOut from "../features/logOut";
+import { setUserData } from "../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setConversations,
@@ -35,11 +36,29 @@ function SideBar() {
     };
 
     getConv();
-  }, [dispatch]);
+  }, [dispatch, userData?._id]);
   const handleCreateConversation = async () => {
     const data = await createConversation();
     dispatch(addConversation(data));
   };
+
+  if (collapsed) {
+    return (
+      <div className="hidden lg:flex flex-col items-center w-14 h-screen bg-[#0d0f14] border-r border-white/6 py-4 gap-1 shrink-0">
+
+        <button className="flex items-center justify-center w-9 h-9 rounded-xl text-500 hover:text-slate-200 hover:bg-white/5 transition-colors duration-150 bg-transparent border-none cursor-pointer mb-1" onClick={()=>setCollapsed(false)}
+        >
+          <PanelRight />
+        </button>
+
+
+        <button className="flex items-center justify-center w-9 h-9 rounded-xl text-500 hover:text-slate-200 hover:bg-white/5 transition-colors duration-150 bg-transparent border-none cursor-pointer">
+      <Plus />
+          </button>
+      </div>
+    );
+  }
+
   return (
     <div className="fixed lg:static inset-y-0 left-0 z-50 w-67.5 h-screen shrink-0 bg-[#0d0f14] border-r border-white/6">
       <div className="flex flex-col h-full">
@@ -111,9 +130,9 @@ function SideBar() {
           {userData ? (
             <div className="flex items-center gap-2.5 cursor-pointer rounded-xl px-3 py-2.5 hover:bg-white/5 transituion-colors duration-150">
               <div className="relative shrink-0">
-                {userData?.avatar || !imageError ? (
+                {userData?.user?.avatar && !imageError ? (
                   <img
-                    src={userData?.avatar}
+                    src={userData?.user?.avatar}
                     alt="avatar"
                     onError={() => setImageError(true)}
                     className="w-9 h-9 rounded-[10px] object-cover border-2 border-indigo-500/25"
@@ -127,7 +146,7 @@ function SideBar() {
 
               <div className="flex-1 min-w-0">
                 <p className="text-[13.3px] font-semibold text-slate-100 truncate">
-                  {userData.name || "User"}
+                  {userData?.user?.name || "User"}
                 </p>
                 <p className="text-[11px] text-slate-600 mt-px">
                   {"Free Plan"}
@@ -138,13 +157,20 @@ function SideBar() {
                 <button className="flex item-center justify-center w-7 h-7 rounded-[7px] border-none bg-transparent text-yellow-600 cursor-pointer hover:bg-white/8 hover:text-slate-400 transition-all duration-150">
                   <Coins size={16} />
                 </button>
-                <button className="flex item-center justify-center w-7 h-7 rounded-[7px] border-none bg-transparent text-yellow-600 cursor-pointer hover:bg-white/8 hover:text-slate-400 transition-all duration-150" onClick={()=>{logOut(),dispatch(setUserData(null))}}>
+                <button
+                  className="flex item-center justify-center w-7 h-7 rounded-[7px] border-none bg-transparent text-yellow-600 cursor-pointer hover:bg-white/8 hover:text-slate-400 transition-all duration-150"
+                  onClick={() => {
+                    (logOut(), dispatch(setUserData(null)));
+                  }}
+                >
                   <LogOut size={16} />
                 </button>
               </div>
             </div>
           ) : (
-            <button className="text-slate-400">Login</button>
+            <button className="w-full flex item-cneter justify-center gap-2 text-sm font-medium text-slate-200 bg-white/5 border border-white/8 rounded-xl py-2.75 cursor-pointer hover:bg-white/8 transition-colors duration-150">
+              Login
+            </button>
           )}
         </div>
       </div>
