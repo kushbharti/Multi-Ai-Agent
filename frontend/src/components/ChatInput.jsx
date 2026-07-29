@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import sendMessage from "../features/sendMessage";
 import { useDispatch } from "react-redux";
-import { setMessages } from "../redux/messageSlice";
+import { addMessage } from "../redux/messageSlice";
 
 function ChatInput() {
   const [value, setValue] = useState("");
@@ -14,8 +14,10 @@ function ChatInput() {
       prompt: value.trim(),
       conversationId: selectedConversation?._id,
     };
-    dispatch(setMessages());
+    dispatch(addMessage({ role: "user", content: value.trim() }));
+    setValue("");
     const data = await sendMessage(payload);
+    dispatch(addMessage({ role: "assistant", content: data }));
     console.log(data);
   };
   return (

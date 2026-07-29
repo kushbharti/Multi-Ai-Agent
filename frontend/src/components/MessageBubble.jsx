@@ -1,4 +1,4 @@
-import React from "react";
+import Markdown from "react-markdown";
 
 function MessageBubble({ role, content }) {
   const isUser = role === "user";
@@ -11,7 +11,7 @@ function MessageBubble({ role, content }) {
             : "bg-white/5 border border-white/6 text-slate-200 rounded-tl-sm"
         }`}
       >
-        {content}
+        <Markdown>{content}</Markdown>
       </div>
     </div>
   );
