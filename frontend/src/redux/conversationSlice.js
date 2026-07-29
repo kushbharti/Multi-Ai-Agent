@@ -16,9 +16,25 @@ const conversationSlice = createSlice({
     setSelectConversation: (state, action) => {
       state.selectedConversation = action.payload;
     },
+    setConvTitle: (state, action) => {
+      const { title, conversationId } = action.payload;
+      state.conversations.map((conv) =>
+        conv._id == conversationId ? { ...conv, title } : conv,
+      );
+      if (state.selectedConversation?._id) {
+        state.selectedConversation = {
+          ...state.selectedConversation,
+          title,
+        };
+      }
+    },
   },
 });
 
-export const { setConversations, addConversation, setSelectConversation } =
-  conversationSlice.actions;
+export const {
+  setConversations,
+  addConversation,
+  setSelectConversation,
+  setConvTitle,
+} = conversationSlice.actions;
 export default conversationSlice.reducer;

@@ -2,9 +2,9 @@ import api from "./../../utils/axios";
 
 async function sendMessage(payload) {
   try {
-    const response = await api.post("/api/agent/chat", payload);
-    console.log(response.data);
-    return response.data;
+    const { data } = await api.post("/api/agent/chat", payload);
+    console.log(data.response);
+    return data.response;
   } catch (error) {
     console.log(error);
     return [];
