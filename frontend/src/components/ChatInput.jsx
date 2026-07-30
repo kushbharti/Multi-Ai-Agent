@@ -34,7 +34,7 @@ function ChatInput() {
       dispatch(
         setConvTitle({
           conversationId: conversation?._id,
-          title: value.trim(),
+          title: prompt.slice(0, 40),
         }),
       );
     }
