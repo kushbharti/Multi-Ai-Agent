@@ -35,11 +35,15 @@ export const getConversation = async (req, res) => {
 export const updateConversation = async (req, res) => {
   try {
     const { id, title } = req.body;
-    const conversation = await Conversation.findByIdAndUpdate(id, {
-      title,
-    });
+    const conversation = await Conversation.findByIdAndUpdate(
+      id,
+      {
+        title,
+      },
+      { new: true },
+    );
 
-    res.status(200).json({ conversation });
+    res.status(200).json(conversation);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: `update conversation error ${error}` });

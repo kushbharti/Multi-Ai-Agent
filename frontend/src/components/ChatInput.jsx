@@ -33,7 +33,7 @@ function ChatInput() {
       });
       dispatch(
         setConvTitle({
-          conversationId: conversation._id,
+          conversationId: conversation?._id,
           title: value.trim(),
         }),
       );
