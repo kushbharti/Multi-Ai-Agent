@@ -10,16 +10,20 @@ import { useDispatch } from "react-redux";
 function ChatArea() {
   const dispatch = useDispatch();
   const { selectedConversation } = useSelector((state) => state.conversation);
+  console.log("Selected Conversation:", selectedConversation);
   useEffect(() => {
     const getMsg = async () => {
-      if (selectedConversation) {
-        if (selectedConversation.title == "New Chat") return;
-        const data = await getMessages(selectedConversation?._id);
-        dispatch(setMessages(data));
-      }
+      if (!selectedConversation) return;
+
+      const data = await getMessages(selectedConversation._id);
+
+      console.log("Fetched:", data);
+
+      dispatch(setMessages(data));
     };
+
     getMsg();
-  }, [selectedConversation?._id]);
+  }, [selectedConversation, dispatch]);
 
   return (
     <div className="flex-1 flex flex-col">

@@ -31,22 +31,23 @@ export const getConversation = async (req, res) => {
     res.status(500).json({ message: `get conversation error ${error}` });
   }
 };
-
 export const updateConversation = async (req, res) => {
   try {
+    console.log(req.body);
+
     const { id, title } = req.body;
+
     const conversation = await Conversation.findByIdAndUpdate(
       id,
-      {
-        title,
-      },
-      { new: true },
+      { title },
+      { returnDocument: "after" },
     );
 
-    res.status(200).json(conversation);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: `update conversation error ${error}` });
+    console.log(conversation);
+
+    res.json(conversation);
+  } catch (err) {
+    console.log(err);
   }
 };
 

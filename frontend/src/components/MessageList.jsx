@@ -5,7 +5,7 @@ function MessageList() {
   const { selectedConversation } = useSelector((state) => state.conversation);
 
   const { messages } = useSelector((state) => state.message);
-
+  console.log("Redux Messages:", messages);
   const suggestions = [
     "Build Netflix clone",
     "Explain Redis",

@@ -18,14 +18,16 @@ const conversationSlice = createSlice({
     },
     setConvTitle: (state, action) => {
       const { title, conversationId } = action.payload;
-      state.conversations.map((conv) =>
-        conv._id == conversationId ? { ...conv, title } : conv,
+
+      state.conversations = state.conversations.map((conv) =>
+        conv._id === conversationId ? { ...conv, title } : conv,
       );
-      if (state.selectedConversation?._id) {
-        state.selectedConversation = {
-          ...state.selectedConversation,
-          title,
-        };
+
+      if (
+        state.selectedConversation &&
+        state.selectedConversation._id === conversationId
+      ) {
+        state.selectedConversation.title = title;
       }
     },
   },

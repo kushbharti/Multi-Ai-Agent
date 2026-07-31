@@ -21,6 +21,7 @@ function ChatInput() {
     let conversation = selectedConversation;
     if (!conversation) {
       const conv = await createConversation();
+      console.log("Conversation:", conv);
       dispatch(setSelectConversation(conv));
       dispatch(addConversation(conv));
       conversation = conv;
@@ -34,7 +35,7 @@ function ChatInput() {
       dispatch(
         setConvTitle({
           conversationId: conversation?._id,
-          title: prompt.slice(0, 40),
+          title: value.trim().slice(0, 40),
         }),
       );
     }
