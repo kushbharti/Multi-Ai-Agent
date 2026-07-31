@@ -55,6 +55,7 @@ function ChatInput() {
     const payload = {
       prompt: value.trim(),
       conversationId: conversation?._id,
+      agent: selectedAgent.toLowerCase(),
     };
 
     console.log("Payload:", payload);

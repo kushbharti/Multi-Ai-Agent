@@ -1,6 +1,14 @@
 import { getModel } from "../config/llmModels.js";
 
 export const router = async (state) => {
+  if (state.agent && state.agent !== "auto") {
+    console.log(`Response =>  ${respopnse}`);
+    return {
+      ...state,
+      agent: state.agent,
+    };
+  }
+
   const llm = await getModel("router");
   const prompt = `You are an expert intent-classification router system. Your sole task is to analyze the user's query and route it to the exact, most appropriate specialized agent. 
 
