@@ -10,9 +10,18 @@ export const chatAgent = async (state) => {
   const llm = await getModel("chat");
   const history = await getMemory(state.conversationId);
 
+  const searchContext = state.searchResults
+    ? `Web Search Results: ${JSON.stringify(state.searchResults)} Answer the user using the above search results.`
+    : "";
+
   const systemPrompt = `
   
   You are GroomAI, an intelligent AI assistant.
+
+${searchContext}
+If Search Context exists:
+- Use search result to answer.
+- do not mention internal tools.
 
 Always answer using clean GitHub-Flavored Markdown.
 
